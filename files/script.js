@@ -18,6 +18,9 @@ const buttonConfirm = document.getElementById("buttonConfirm");
 const result = document.querySelector(".result");
 const resultInfo = document.getElementById("endInfo");
 const nickConfirm = document.getElementById("nickConfirm");
+const register = document.querySelector(".register"); 
+const username = document.getElementById("username");
+const userid = document.getElementById("userid");
 
 var __timePlay = 30;
 var progressBarInterval;
@@ -25,16 +28,31 @@ var stageLevel = 0;
 var check = false;
 
 const gameInit = () => {
+
+	const cookie = document.cookie;
+	let check2 = false;
+	if (cookie != ""){
+		//read cookie
+		check2 = true;
+		console.log(cookie);
+	}
+
+	if (cookie == ""){
+		register.style.display = "";
+	}
+
 	buttonConfirm.addEventListener('click', function () {
-		if (check) {
-			if (input.value == resaultQuestion) {
-				generateQuestion();
-				levelHack.textContent = "Zadanie " + stageLevel;
-				input.value = '';
-				progressBarStart('game', __timePlay);
-			}
-			else{
-				gameOver();
+		if (check2){
+			if (check) {
+				if (input.value == resaultQuestion) {
+					generateQuestion();
+					levelHack.textContent = "Zadanie " + stageLevel;
+					input.value = '';
+					progressBarStart('game', __timePlay);
+				}
+				else{
+					gameOver();
+				}
 			}
 		}
 	});
@@ -42,15 +60,29 @@ const gameInit = () => {
 	nickConfirm.addEventListener('click', function () {
 		var date = new Date();
 		date.setFullYear(date.getFullYear() + 10); // Ustawiamy datę na 10 lat w przyszłości
-		document.cookie = "cookieName=cookieValue; expires=" + date.toUTCString() + "; path=/";
+
+		//todo
+		//send request with user nick
+		//check if nick is taken
+		//send generated userid
+		//save userid and nick to a cookie
+
+		const id = "01";
+
+		document.cookie = "userid=" + id + "; username=" + document.getElementById("inputNick") + "; expires=" + date.toUTCString() + "; path=/";
+		check2 = true;
+		username.innerHTML = "username: " + document.getElementById("inputNick").value;
+		userid.innerHTML = "userid: " + id;
+		register.style.display = 'none';
+
 	});
 
+	result.style.display = 'none';
 	hackFunction.style.display = 'none';
 	hackFunction2.style.display = 'none';
 	hackText.style.display = 'none';
 	progressBar.style.display = 'none';
 	hackInfo.style.display = 'none';
-	result.style.display = 'none';
 	//document.addEventListener('contextmenu', event => event.preventDefault());
 };
 
@@ -63,6 +95,7 @@ const gameStart = () => {
 	hackInfo.style.display = 'block';
 	textInfo.innerHTML = 'Przygotuj sie...';
 	result.style.display = 'none';
+	register.style.display = 'none';
 	input.value = '';
 	progressBarStart('start', 2);
 };
@@ -76,7 +109,9 @@ const gameOver = () => {
 	hackText.style.display = 'none';
 	result.style.display = 'none';
 	resultInfo.innerHTML = 'Wynik: ' + (stageLevel - 1) + " pkt";
+	register.style.display = 'none';
 	progressBarStart('end', 2);
+	//send score to server
 };
 
 function progressBarStart(type, time) {

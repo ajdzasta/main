@@ -68,6 +68,7 @@ a .home:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     margin: 20px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -147,12 +148,27 @@ a .home:hover {
     color: #fff
 }
 
+.container .hackBox .register {
+    font-size: 20px;
+    display: block;
+    height: 100px;
+    justify-content: space-around;
+    transform: translateY(100%);
+    text-align: center;
+    color: #fff
+}
+
 .container .hackBox .hackInfo h2 {
     font-size: 13px;
     font-weight: 500
 }
 
 .container .hackBox .result h2 {
+    font-size: 13px;
+    font-weight: 500
+}
+
+.container .hackBox .register h2 {
     font-size: 13px;
     font-weight: 500
 }
@@ -298,11 +314,11 @@ a .home:hover {
 
 
 
-.container .hackBox .result textarea {
+.container .hackBox .register textarea {
     background-color: rgba(0,0,0,0)
 }
 
-.container .hackBox .result input {
+.container .hackBox .register input {
     text-align: center;
     width: 90%;
     background-color: rgba(0,0,0,0);
@@ -314,18 +330,18 @@ a .home:hover {
     font-weight: bold
 }
 
-.container .hackBox .result input:focus {
+.container .hackBox .register input:focus {
     outline: none
 }
 
-.container .hackBox .result .form {
+.container .hackBox .register .form {
     text-align: center;
     padding: 10px;
     color: #fff;
     margin: 0px 150px 0px 150px;
 }
 
-.container .hackBox .result .form .nickConfirm {
+.container .hackBox .register .form .nickConfirm {
     margin-bottom: 20px;
     display: flex;
     border: none !important;
@@ -341,8 +357,21 @@ a .home:hover {
     transition: all .2s
 }
 
-.container .hackBox .result .form .nickConfirm:hover {
+.container .hackBox .register .form .nickConfirm:hover {
     background-color: #23003c
+}
+
+.container .info {
+    margin-top: 10px;
+    position: relative;
+    left: -320px;
+    display: block;
+    background-color: #000000;
+    color: #696969;
+    border-radius: 5px;
+    font-size: 13px;
+    text-align: left;
+    justify-content: space-around;
 }
 
 @-webkit-keyframes animation-left-author {
