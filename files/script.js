@@ -68,8 +68,10 @@ const gameInit = () => {
 		//save userid and nick to a cookie
 
 		const id = "01";
-
-		document.cookie = "userid=" + id + "; username=" + document.getElementById("inputNick") + "; expires=" + date.toUTCString() + "; path=/";
+		const newCookie1 = "userid=" + id + "; expires=" + date.toUTCString() + "; path=/";
+		const newCookie2 = "username=" + document.getElementById("inputNick") + "; expires=" + date.toUTCString() + "; path=/";
+		document.cookie = newCookie1;
+		document.cookie = newCookie2;
 		check2 = true;
 		username.innerHTML = "username: " + document.getElementById("inputNick").value;
 		userid.innerHTML = "userid: " + id;
