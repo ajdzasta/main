@@ -40,8 +40,9 @@ const gameInit = () => {
 	});
 
 	nickConfirm.addEventListener('click', function () {
-		console.log("chuj");
-		document.cookie = "username=John Doe";
+		var date = new Date();
+		date.setFullYear(date.getFullYear() + 10); // Ustawiamy datę na 10 lat w przyszłości
+		document.cookie = "cookieName=cookieValue; expires=" + date.toUTCString() + "; path=/";
 	});
 
 	hackFunction.style.display = 'none';
