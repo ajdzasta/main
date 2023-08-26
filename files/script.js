@@ -32,7 +32,8 @@ const gameInit = () => {
 	const cookie = document.cookie;
 	let check2 = false;
 	if (cookie != ""){
-		//read cookie
+		username.innerHTML = "username: " + getCookie("username");
+		userid.innerHTML = "userid: " + getCookie("userid");
 		check2 = true;
 		console.log(cookie);
 	}
@@ -88,6 +89,22 @@ const gameInit = () => {
 	progressBar.style.display = 'none';
 	hackInfo.style.display = 'none';
 	//document.addEventListener('contextmenu', event => event.preventDefault());
+};
+
+const getCookie = (cname) => {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+	  let c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
 };
 
 const gameStart = () => {
