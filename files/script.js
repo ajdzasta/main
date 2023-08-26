@@ -69,7 +69,9 @@ const gameInit = () => {
 
 		const id = "01";
 		const newCookie1 = "userid=" + id + "; expires=" + date.toUTCString() + "; path=/";
-		const newCookie2 = "username=" + document.getElementById("inputNick") + "; expires=" + date.toUTCString() + "; path=/";
+		const newCookie2 = "username=" + document.getElementById("inputNick").value + "; expires=" + date.toUTCString() + "; path=/";
+		console.log(newCookie1);
+		console.log(newCookie2);
 		document.cookie = newCookie1;
 		document.cookie = newCookie2;
 		check2 = true;
