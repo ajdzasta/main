@@ -17,6 +17,7 @@ const symbol = document.getElementById('symbol');
 const buttonConfirm = document.getElementById("buttonConfirm");
 const result = document.querySelector(".result");
 const resultInfo = document.getElementById("endInfo");
+const resultInfo2 = document.getElementById("endInfo2");
 const nickConfirm = document.getElementById("nickConfirm");
 const register = document.querySelector(".register"); 
 const username = document.getElementById("username");
@@ -58,25 +59,31 @@ const gameInit = () => {
 		}
 	});
 
-	nickConfirm.addEventListener('click', function () {
+	nickConfirm.addEventListener('click', async function () {
 		var date = new Date();
 		date.setFullYear(date.getFullYear() + 10); // Ustawiamy datę na 10 lat w przyszłości
 
-		//todo
-		//send request with user nick
-		//check if nick is taken
-		//send generated userid
-		//save userid and nick to a cookie
+		const username_input = document.getElementById("inputNick").value;
 
-		const id = "01";
+		const response = await register_api(username_input);
+
+		const id = response["userid"];
+
+		if (id == undefined){
+			return;
+		}
+
 		const newCookie1 = "userid=" + id + "; expires=" + date.toUTCString() + "; path=/";
-		const newCookie2 = "username=" + document.getElementById("inputNick").value + "; expires=" + date.toUTCString() + "; path=/";
+		const newCookie2 = "username=" + username_input + "; expires=" + date.toUTCString() + "; path=/";
+		const newCookie3 = "score=0" + "; expires=" + date.toUTCString() + "; path=/";
 		console.log(newCookie1);
 		console.log(newCookie2);
+		console.log(newCookie3);
 		document.cookie = newCookie1;
 		document.cookie = newCookie2;
+		document.cookie = newCookie3;
 		check2 = true;
-		username.innerHTML = "username: " + document.getElementById("inputNick").value;
+		username.innerHTML = "username: " + username_input;
 		userid.innerHTML = "userid: " + id;
 		register.style.display = 'none';
 
@@ -121,7 +128,7 @@ const gameStart = () => {
 	progressBarStart('start', 2);
 };
 
-const gameOver = () => {
+const gameOver = async() => {
 	check = false;
 	hackInfo.style.display = 'block';
 	textInfo.innerHTML = 'Zadanie nieudane!';
@@ -130,9 +137,23 @@ const gameOver = () => {
 	hackText.style.display = 'none';
 	result.style.display = 'none';
 	resultInfo.innerHTML = 'Wynik: ' + (stageLevel - 1) + " pkt";
+
+	const highest_score = getCookie("score");
+
+	if ((stageLevel - 1) > highest_score){
+		resultInfo2.innerHTML = 'Największy wynik: ' + (stageLevel - 1) + " pkt";
+		const editCookie = "score=" + (stageLevel - 1) + "; expires=" + date.toUTCString() + "; path=/";
+		document.cookie = editCookie;
+		const id = getCookie("userid")
+		const update = await updateScore(id,(stageLevel - 1));
+		console.log(update);
+	}
+	else{
+		resultInfo2.innerHTML = 'Największy wynik: ' + highest_score + " pkt";
+	}
+
 	register.style.display = 'none';
 	progressBarStart('end', 2);
-	//send score to server
 };
 
 function progressBarStart(type, time) {
