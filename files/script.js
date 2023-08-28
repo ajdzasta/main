@@ -142,6 +142,10 @@ const gameOver = async() => {
 
 	if ((stageLevel - 1) > highest_score){
 		resultInfo2.innerHTML = 'Największy wynik: ' + (stageLevel - 1) + " pkt";
+
+		var date = new Date();
+		date.setFullYear(date.getFullYear() + 10); // Ustawiamy datę na 10 lat w przyszłości
+		
 		const editCookie = "score=" + (stageLevel - 1) + "; expires=" + date.toUTCString() + "; path=/";
 		document.cookie = editCookie;
 		const id = getCookie("userid")
